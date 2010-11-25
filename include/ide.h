@@ -24,7 +24,11 @@
 #ifndef	_IDE_H
 #define _IDE_H
 
+#ifndef CONFIG_IDE_ONE_LUN_PER_CHANNEL
 #define	IDE_BUS(dev)	(dev >> 1)
+#else
+#define	IDE_BUS(dev)	(dev)
+#endif
 
 #define	ATA_CURR_BASE(dev)	(CONFIG_SYS_ATA_BASE_ADDR+ide_bus_offset[IDE_BUS(dev)])
 
