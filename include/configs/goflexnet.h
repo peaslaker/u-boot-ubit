@@ -138,7 +138,9 @@
   "nc_test=ping $ncip\0" \
   "nc_start=setenv stdin nc; setenv stdout nc; setenv stderr nc; version\0" \
   \
-  "bootcmd_go=run my_boot; run usb_boot; run hd_boot; run ubi_boot; run chain_orig chain_go\0" \
+  "bootcmd_fast=run ubi_boot; run usb_boot; run hd_boot; run chain chain_go\0" \
+  "bootcmd_go=run my_boot; run usb_boot; run hd_boot; run ubi_boot; run chain chain_go\0" \
+  "bootcmd_test=mw $addr_1 1 1; if cmp $addr_1 $addr_2 1; then echo starting; else mw $addr_2 1 1; run chain_test chain_go; fi; run bootcmd_go\0" \
   \
   "arcNumber=3089\0" \
   "mainlineLinux=yes\0" \
@@ -149,10 +151,14 @@
   "hd_boot=ide reset; run hd_args ext2_kern ext2_boot; run ext2_rd ubi_fallback\0" \
   "hd_args=setenv ext2_dev ide 0:1; setenv dev_args root=/dev/sda3 rootfstype=ext3; run set_bootargs\0" \
   \
-  "ubi_boot=run ubi_args ubi_rd ubi_fallback\0" \
-  "ubi_args=setenv dev_args ubi.mtd=ubi root=/dev/sda1; run set_bootargs\0" \
+  "ubi_boot=run $ubi_args ubi_rd ubi_fallback\0" \
+  "ubi_args=ubi_args_default\0" \
+  "ubi_args_default=setenv dev_args ubi.mtd=ubi root=/dev/sda1; run set_bootargs\0" \
+  "ubi_args_tmpfs=setenv dev_args ubi.mtd=ubi rootfstype=tmpfs; run set_bootargs\0" \
+  "ubi_args_ubifs=setenv dev_args ubi.mtd=ubi rootfstype=ubifs; run set_bootargs\0" \
   \
-  "chain_orig=ubifsmount uboot; ubifsload 0x800000 original.kwb\0" \
+  "chain=ubifsmount boot; ubifsload 0x800000 u-boot.kwb\0" \
+  "chain_test=ubifsmount boot; ubifsload 0x800000 test.kwb\0" \
   \
   "mtdids=nand0=orion_nand\0" \
   "partition=nand0,2\0" \
@@ -160,7 +166,8 @@
   \
   "console=ttyS0,115200\0" \
   "mtdparts=mtdparts=orion_nand:1M(u-boot),4M(uImage),32M(rootfs),-(ubi)\0" \
-  "set_bootargs=setenv bootargs console=$console $mtdparts $dev_args netconsole=@10.0.0.6/eth0,@10.0.0.1/\0" \
+  \
+  "set_bootargs=setenv bootargs console=$console $mtdparts $dev_args netconsole=@$ipaddr/eth0,@$ncipk/\0" \
   \
   "ext2_kern=mw $addr_kern 0 1; ext2load $ext2_dev $addr_kern /boot/uImage\0" \
   "ext2_rd=mw $addr_rd 0 1; ext2load $ext2_dev $addr_rd /uInitrd\0" \
@@ -179,9 +186,10 @@
   "addr_1=0x67FFFC\0" \
   "addr_2=0x67FFF8\0" \
   \
-  "ipaddr=10.0.0.6\0" \
-  "serverip=10.0.0.2\0" \
-  "ncip=10.0.0.1\0" \
+  "ipaddr=10.10.10.6\0" \
+  "ncip=10.10.10.5\0" \
+  "ncipk=10.10.10.4\0" \
+  "serverip=10.10.10.3\0" \
   \
   "led_init=green blinking\0" \
   "led_exit=green off\0" \
