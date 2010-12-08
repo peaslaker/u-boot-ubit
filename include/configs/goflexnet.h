@@ -138,9 +138,8 @@
   "nc_test=ping $ncip\0" \
   "nc_start=setenv stdin nc; setenv stdout nc; setenv stderr nc; version\0" \
   \
-  "bootcmd_fast=run ubi_boot; run usb_boot; run hd_boot; run chain chain_go\0" \
-  "bootcmd_go=run my_boot; run usb_boot; run hd_boot; run ubi_boot; run chain chain_go\0" \
-  "bootcmd_test=mw $addr_1 1 1; if cmp $addr_1 $addr_2 1; then echo starting; else mw $addr_2 1 1; run chain_test chain_go; fi; run bootcmd_go\0" \
+  "bootcmd_fast=run ubi_boot; run usb_boot; run hd_boot; run chain\0" \
+  "bootcmd_go=run my_boot; run usb_boot; run hd_boot; run ubi_boot; run chain\0" \
   \
   "arcNumber=3089\0" \
   "mainlineLinux=yes\0" \
@@ -157,8 +156,7 @@
   "ubi_args_tmpfs=setenv dev_args ubi.mtd=ubi rootfstype=tmpfs; run set_bootargs\0" \
   "ubi_args_ubifs=setenv dev_args ubi.mtd=ubi rootfstype=ubifs; run set_bootargs\0" \
   \
-  "chain=ubifsmount boot; ubifsload 0x800000 u-boot.kwb\0" \
-  "chain_test=ubifsmount boot; ubifsload 0x800000 test.kwb\0" \
+  "chain=nand read.e 0x800000 0x480000 0x80000; go 0x800200\0" \
   \
   "mtdids=nand0=orion_nand\0" \
   "partition=nand0,2\0" \
@@ -179,7 +177,6 @@
   \
   "boot_kern=bootm $addr_kern\0" \
   "boot_rd=bootm $addr_kern $addr_rd\0" \
-  "chain_go=go 0x800200\0" \
   \
   "addr_kern=0x680000\0" \
   "addr_rd=0x1100000\0" \
