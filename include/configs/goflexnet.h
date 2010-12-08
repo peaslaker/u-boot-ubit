@@ -28,7 +28,7 @@
 /*
  * Version number information
  */
-#define CONFIG_IDENT_STRING	"\nMarvell-GoflexNet by Jeff Doozan, Peter Carmichael"
+#define CONFIG_IDENT_STRING	"\nUBIT v 0.3 for Seagate GoFlex Net by Peter Carmichael"
 
 /*
  * High Level Configuration Options (easy to change)
