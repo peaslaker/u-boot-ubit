@@ -28,7 +28,7 @@
 /*
  * Version number information
  */
-#define CONFIG_IDENT_STRING	"\nUBIT v 0.3 for Seagate GoFlex Net by Peter Carmichael"
+#define CONFIG_IDENT_STRING	"\nUBIT v0.4 for Seagate GoFlex Net by Peter Carmichael"
 
 /*
  * High Level Configuration Options (easy to change)
@@ -139,7 +139,7 @@
   "nc_start=setenv stdin nc; setenv stdout nc; setenv stderr nc; version\0" \
   \
   "bootcmd_fast=run ubi_boot; run usb_boot; run hd_boot; run chain\0" \
-  "bootcmd_go=run my_boot; run usb_boot; run hd_boot; run ubi_boot; run chain\0" \
+  "bootcmd_go=run usb_boot; run hd_boot; run ubi_boot; run chain\0" \
   \
   "arcNumber=3089\0" \
   "mainlineLinux=yes\0" \
@@ -152,9 +152,8 @@
   \
   "ubi_boot=run $ubi_args ubi_rd ubi_fallback\0" \
   "ubi_args=ubi_args_default\0" \
-  "ubi_args_default=setenv dev_args ubi.mtd=ubi root=/dev/sda1; run set_bootargs\0" \
-  "ubi_args_tmpfs=setenv dev_args ubi.mtd=ubi rootfstype=tmpfs; run set_bootargs\0" \
-  "ubi_args_ubifs=setenv dev_args ubi.mtd=ubi rootfstype=ubifs; run set_bootargs\0" \
+  "ubi_args_default=setenv dev_args ubi.mtd=root root=/dev/sda1; run set_bootargs\0" \
+  "ubi_args_tmpfs=setenv dev_args ubi.mtd=root rootfstype=tmpfs; run set_bootargs\0" \
   \
   "chain=nand read.e 0x800000 0x480000 0x80000; go 0x800200\0" \
   \
@@ -163,7 +162,7 @@
   "ethact=egiga0\0" \
   \
   "console=ttyS0,115200\0" \
-  "mtdparts=mtdparts=orion_nand:1M(u-boot),4M(uImage),32M(rootfs),-(ubi)\0" \
+  "mtdparts=mtdparts=orion_nand:1M(u-boot),4M(uImage),32M(pogoplug),-(root)\0" \
   \
   "set_bootargs=setenv bootargs console=$console $mtdparts $dev_args netconsole=@$ipaddr/eth0,@$ncipk/\0" \
   \
@@ -180,8 +179,6 @@
   \
   "addr_kern=0x680000\0" \
   "addr_rd=0x1100000\0" \
-  "addr_1=0x67FFFC\0" \
-  "addr_2=0x67FFF8\0" \
   \
   "ipaddr=10.10.10.6\0" \
   "ncip=10.10.10.5\0" \
@@ -193,7 +190,7 @@
   "led_error=orange blinking\0"
 
 
-#define CONFIG_BOOTCOMMAND "ubi part ubi; run bootcmd_go"
+#define CONFIG_BOOTCOMMAND "ubi part root; run bootcmd_go"
 #define CONFIG_PREBOOT "setenv preboot run nc_test nc_start; saveenv; run nc_test nc_start"
 
 /*
