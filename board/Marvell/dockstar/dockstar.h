@@ -22,13 +22,13 @@
  * MA 02110-1301 USA
  */
 
-#ifndef __GOFLEXNET_H
-#define __GOFLEXNET_H
+#ifndef __DOCKSTAR_H
+#define __DOCKSTAR_H
 
-#define GOFLEXNET_OE_LOW       (~(0))
-#define GOFLEXNET_OE_VAL_LOW   (1 << 29)	/* USB_PWEN low */
-#define GOFLEXNET_OE_HIGH      (~(0))
-#define GOFLEXNET_OE_VAL_HIGH  (0)
+#define DOCKSTAR_OE_LOW       (~(0))
+#define DOCKSTAR_OE_VAL_LOW   (1 << 29)	/* USB_PWEN low */
+#define DOCKSTAR_OE_HIGH      (~(0))
+#define DOCKSTAR_OE_VAL_HIGH  (0)
 
 /* PHY related */
 #define MV88E1116_LED_FCTRL_REG		10
@@ -38,4 +38,4 @@
 #define MV88E1116_RGMII_TXTM_CTRL	(1 << 4)
 #define MV88E1116_RGMII_RXTM_CTRL	(1 << 5)
 
-#endif /* __GOFLEXNET_H */
+#endif /* __DOCKSTAR_H */

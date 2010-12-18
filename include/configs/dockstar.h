@@ -22,13 +22,13 @@
  * MA 02110-1301 USA
  */
 
-#ifndef _CONFIG_GOFLEXNET_H
-#define _CONFIG_GOFLEXNET_H
+#ifndef _CONFIG_DOCKSTAR_H
+#define _CONFIG_DOCKSTAR_H
 
 /*
  * Version number information
  */
-#define CONFIG_IDENT_STRING	"\nUBIT v0.4 for Seagate GoFlex Net by Peter Carmichael"
+#define CONFIG_IDENT_STRING	"\nUBIT v0.4 for Seagate Dockstar by Peter Carmichael"
 
 /*
  * High Level Configuration Options (easy to change)
@@ -38,7 +38,7 @@
 #define CONFIG_FEROCEON_88FR131	1	/* CPU Core subversion */
 #define CONFIG_KIRKWOOD		1	/* SOC Family Name */
 #define CONFIG_KW88F6281	1	/* SOC Name */
-#define CONFIG_MACH_GOFLEXNET	/* Machine type */
+#define CONFIG_MACH_DOCKSTAR	/* Machine type */
 
 #define CONFIG_MD5	/* get_random_hex on krikwood needs MD5 support */
 #define CONFIG_SKIP_LOWLEVEL_INIT	/* disable board lowlevel_init */
@@ -101,7 +101,6 @@
 #define CONFIG_SYS_LONGHELP
 #define CONFIG_SYS_HUSH_PARSER
 #define CONFIG_SYS_PROMPT_HUSH_PS2 "> "
-#define CONFIG_CMD_IDE
 /*
  * NAND configuration
  */
@@ -138,17 +137,14 @@
   "nc_test=ping $ncip\0" \
   "nc_start=setenv stdin nc; setenv stdout nc; setenv stderr nc; version\0" \
   \
-  "bootcmd_fast=run ubi_boot; run usb_boot; run hd_boot; run chain\0" \
-  "bootcmd_go=run usb_boot; run hd_boot; run ubi_boot; run chain\0" \
+  "bootcmd_fast=run ubi_boot; run usb_boot; run chain\0" \
+  "bootcmd_go=run usb_boot; run ubi_boot; run chain\0" \
   \
-  "arcNumber=3089\0" \
+  "arcNumber=2998\0" \
   "mainlineLinux=yes\0" \
   \
   "usb_boot=usb start; run usb_args ext2_kern ext2_boot; run ext2_rd ubi_fallback; usb stop\0" \
   "usb_args=setenv ext2_dev usb 0:1; setenv dev_args root=/dev/sda3 rootdelay=10 rootfstype=ext3; run set_bootargs\0" \
-  \
-  "hd_boot=ide reset; run hd_args ext2_kern ext2_boot; run ext2_rd ubi_fallback\0" \
-  "hd_args=setenv ext2_dev ide 0:1; setenv dev_args root=/dev/sda3 rootfstype=ext3; run set_bootargs\0" \
   \
   "ubi_boot=run $ubi_args ubi_rd ubi_fallback\0" \
   "ubi_args=ubi_args_default\0" \
@@ -247,36 +243,6 @@
 #endif /* CONFIG_CMD_USB */
 
 /*
- * IDe Support on SATA port0
- */
-#ifdef CONFIG_CMD_IDE
-#define __io
-#define CONFIG_IDE_ONE_LUN_PER_CHANNEL
-#define CONFIG_MVSATA_IDE
-#define CONFIG_IDE_PREINIT
-#define CONFIG_MVSATA_IDE_USE_PORT1
-/* Needs byte-swapping for ATA data register */
-#define CONFIG_IDE_SWAP_IO
-/* Data, registers and alternate blocks are at the same offset */
-#define CONFIG_SYS_ATA_DATA_OFFSET     (0x0100)
-#define CONFIG_SYS_ATA_REG_OFFSET      (0x0100)
-#define CONFIG_SYS_ATA_ALT_OFFSET      (0x0100)
-/* Each 8-bit ATA register is aligned to a 4-bytes address */
-#define CONFIG_SYS_ATA_STRIDE          4
-/* Controller supports 48-bits LBA addressing */
-#define CONFIG_LBA48
-/* CONFIG_CMD_IDE requires some #defines for ATA registers */
-#define CONFIG_SYS_IDE_MAXBUS          2
-#define CONFIG_SYS_IDE_MAXDEVICE       2
-/* ATA registers base is at SATA controller base */
-#define CONFIG_SYS_ATA_BASE_ADDR       KW_SATA_BASE
-/* ATA bus 0 is Kirkwood port 0 on openrd */
-#define CONFIG_SYS_ATA_IDE0_OFFSET     KW_SATA_PORT0_OFFSET
-/* ATA bus 1 is Kirkwood port 1 on openrd */
-#define CONFIG_SYS_ATA_IDE1_OFFSET     KW_SATA_PORT1_OFFSET
-#endif /* CONFIG_CMD_IDE */
-
-/*
  * File system
  */
 #define CONFIG_CMD_EXT2
@@ -308,4 +274,4 @@
 #define STATUS_LED_STATE1  STATUS_LED_OFF
 #define STATUS_LED_PERIOD1 (CONFIG_SYS_HZ /4)
 
-#endif /* _CONFIG_GOFLEXNET_H */
+#endif /* _CONFIG_DOCKSTAR_H */

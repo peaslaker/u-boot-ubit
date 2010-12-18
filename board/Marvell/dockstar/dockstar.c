@@ -28,7 +28,7 @@
 #include <asm/arch/mpp.h>
 #include <linux/ctype.h> /* isspace */
 #include <status_led.h>
-#include "goflexnet.h"
+#include "dockstar.h"
 
 DECLARE_GLOBAL_DATA_PTR;
 
@@ -39,9 +39,9 @@ int board_init(void)
 	 * There are maximum 64 gpios controlled through 2 sets of registers
 	 * the  below configuration configures mainly initial LED status
 	 */
-	kw_config_gpio(GOFLEXNET_OE_VAL_LOW,
-			GOFLEXNET_OE_VAL_HIGH,
-			GOFLEXNET_OE_LOW, GOFLEXNET_OE_HIGH);
+	kw_config_gpio(DOCKSTAR_OE_VAL_LOW,
+			DOCKSTAR_OE_VAL_HIGH,
+			DOCKSTAR_OE_LOW, DOCKSTAR_OE_HIGH);
 
 	/* Multi-Purpose Pins Functionality configuration */
 	u32 kwmpp_config[] = {
@@ -102,7 +102,7 @@ int board_init(void)
 	/*
 	 * arch number of board
 	 */
-	gd->bd->bi_arch_number = MACH_TYPE_GOFLEXNET;
+	gd->bd->bi_arch_number = MACH_TYPE_DOCKSTAR;
 
 	/* adress of boot parameters */
 	gd->bd->bi_boot_params = kw_sdram_bar(0) + 0x100;
