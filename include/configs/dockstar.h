@@ -140,9 +140,6 @@
   "bootcmd_fast=run ubi_boot; run usb_boot; run chain\0" \
   "bootcmd_go=run usb_boot; run ubi_boot; run chain\0" \
   \
-  "arcNumber=2998\0" \
-  "mainlineLinux=yes\0" \
-  \
   "usb_boot=usb start; run usb_args ext2_kern ext2_boot; run ext2_rd ubi_fallback; usb stop\0" \
   "usb_args=setenv ext2_dev usb 0:1; setenv dev_args root=/dev/sda3 rootdelay=10 rootfstype=ext3; run set_bootargs\0" \
   \
