@@ -393,13 +393,14 @@ int fw_env_write(char *name, char *value)
 		/*
 		 * Ethernet Address and serial# can be set only once
 		 */
+/*
 		if ((strcmp (name, "ethaddr") == 0) ||
 			(strcmp (name, "serial#") == 0)) {
 			fprintf (stderr, "Can't overwrite \"%s\"\n", name);
 			errno = EROFS;
 			return -1;
 		}
-
+*/
 		if (*++nxt == '\0') {
 			*env = '\0';
 		} else {
