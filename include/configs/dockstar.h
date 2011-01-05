@@ -28,7 +28,7 @@
 /*
  * Version number information
  */
-#define CONFIG_IDENT_STRING	"\nUBIT v0.4 for Seagate Dockstar by Peter Carmichael"
+#define CONFIG_IDENT_STRING	"\nUBIT v0.5 for Seagate Dockstar by Peter Carmichael"
 
 /*
  * High Level Configuration Options (easy to change)
