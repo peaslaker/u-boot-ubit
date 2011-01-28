@@ -140,7 +140,7 @@
   "bootcmd_fast=run ubi_boot; run usb_boot; run chain\0" \
   "bootcmd_go=run usb_boot; run ubi_boot; run chain\0" \
   \
-  "usb_boot=usb start; run usb_args ext2_kern ext2_boot; run ext2_rd ubi_fallback; usb stop\0" \
+  "usb_boot=run usb_args ext2_kern ext2_boot; run ext2_rd ubi_fallback\0" \
   "usb_args=setenv ext2_dev usb 0:1; setenv dev_args root=/dev/sda3 rootdelay=10 rootfstype=ext3; run set_bootargs\0" \
   \
   "ubi_boot=run $ubi_args ubi_rd ubi_fallback\0" \
@@ -159,12 +159,12 @@
   \
   "set_bootargs=setenv bootargs console=$console $mtdparts $dev_args netconsole=@$ipaddr/eth0,@$ncipk/\0" \
   \
-  "ext2_kern=mw $addr_kern 0 1; ext2load $ext2_dev $addr_kern /boot/uImage\0" \
-  "ext2_rd=mw $addr_rd 0 1; ext2load $ext2_dev $addr_rd /uInitrd\0" \
+  "ext2_kern=ext2load $ext2_dev $addr_kern /boot/uImage\0" \
+  "ext2_rd=ext2load $ext2_dev $addr_rd /uInitrd\0" \
   "ext2_boot=run ext2_rd boot_rd; run boot_kern\0" \
   \
-  "ubi_kern=mw $addr_kern 0 1; ubifsmount boot; ubifsload $addr_kern /boot/uImage\0" \
-  "ubi_rd=mw $addr_rd 0 1; ubifsmount ramdisk; ubifsload $addr_rd /uInitrd\0" \
+  "ubi_kern=ubifsmount boot; ubifsload $addr_kern /boot/uImage\0" \
+  "ubi_rd=ubifsmount ramdisk; ubifsload $addr_rd /uInitrd\0" \
   "ubi_fallback=run ubi_kern boot_rd\0" \
   \
   "boot_kern=bootm $addr_kern\0" \
@@ -184,7 +184,7 @@
 
 
 #define CONFIG_BOOTCOMMAND "ubi part root; run bootcmd_go"
-#define CONFIG_PREBOOT "setenv preboot run nc_test nc_start; saveenv; run nc_test nc_start"
+#define CONFIG_PREBOOT "setenv preboot 'usb start; run nc_test nc_start'; saveenv; usb start; run nc_test nc_start"
 
 /*
  * Size of malloc() pool
