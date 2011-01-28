@@ -28,7 +28,7 @@
 /*
  * Version number information
  */
-#define CONFIG_IDENT_STRING	"\nUBIT v0.4 for Seagate GoFlex Net by Peter Carmichael"
+#define CONFIG_IDENT_STRING	"\nUBIT v0.5 for Seagate GoFlex Net by Peter Carmichael"
 
 /*
  * High Level Configuration Options (easy to change)
@@ -138,10 +138,10 @@
   "nc_test=ping $ncip\0" \
   "nc_start=setenv stdin nc; setenv stdout nc; setenv stderr nc; version\0" \
   \
-  "bootcmd_fast=run ubi_boot; run usb_boot; run hd_boot; run chain\0" \
-  "bootcmd_go=run usb_boot; run hd_boot; run ubi_boot; run chain\0" \
+  "bootcmd_fast=run ubi_boot; run usb_boot; run hd_boot\0" \
+  "bootcmd_go=run usb_boot; run hd_boot; run ubi_boot\0" \
   \
-  "usb_boot=usb start; run usb_args ext2_kern ext2_boot; run ext2_rd ubi_fallback; usb stop\0" \
+  "usb_boot=run usb_args ext2_kern ext2_boot; run ext2_rd ubi_fallback\0" \
   "usb_args=setenv ext2_dev usb 0:1; setenv dev_args root=/dev/sda3 rootdelay=10 rootfstype=ext3; run set_bootargs\0" \
   \
   "hd_boot=ide reset; run hd_args ext2_kern ext2_boot; run ext2_rd ubi_fallback\0" \
@@ -152,8 +152,6 @@
   "ubi_args_default=setenv dev_args ubi.mtd=root root=/dev/sda1; run set_bootargs\0" \
   "ubi_args_tmpfs=setenv dev_args ubi.mtd=root rootfstype=tmpfs; run set_bootargs\0" \
   \
-  "chain=nand read.e 0x800000 0x480000 0x80000; go 0x800200\0" \
-  \
   "mtdids=nand0=orion_nand\0" \
   "partition=nand0,2\0" \
   "ethact=egiga0\0" \
@@ -163,12 +161,12 @@
   \
   "set_bootargs=setenv bootargs console=$console $mtdparts $dev_args netconsole=@$ipaddr/eth0,@$ncipk/\0" \
   \
-  "ext2_kern=mw $addr_kern 0 1; ext2load $ext2_dev $addr_kern /boot/uImage\0" \
-  "ext2_rd=mw $addr_rd 0 1; ext2load $ext2_dev $addr_rd /uInitrd\0" \
+  "ext2_kern=ext2load $ext2_dev $addr_kern /boot/uImage\0" \
+  "ext2_rd=ext2load $ext2_dev $addr_rd /uInitrd\0" \
   "ext2_boot=run ext2_rd boot_rd; run boot_kern\0" \
   \
-  "ubi_kern=mw $addr_kern 0 1; ubifsmount boot; ubifsload $addr_kern /boot/uImage\0" \
-  "ubi_rd=mw $addr_rd 0 1; ubifsmount ramdisk; ubifsload $addr_rd /uInitrd\0" \
+  "ubi_kern=ubifsmount boot; ubifsload $addr_kern /boot/uImage\0" \
+  "ubi_rd=ubifsmount ramdisk; ubifsload $addr_rd /uInitrd\0" \
   "ubi_fallback=run ubi_kern boot_rd\0" \
   \
   "boot_kern=bootm $addr_kern\0" \
@@ -188,7 +186,7 @@
 
 
 #define CONFIG_BOOTCOMMAND "ubi part root; run bootcmd_go"
-#define CONFIG_PREBOOT "setenv preboot run nc_test nc_start; saveenv; run nc_test nc_start"
+#define CONFIG_PREBOOT "setenv preboot 'usb start; run nc_test nc_start'; saveenv; usb start; run nc_test nc_start"
 
 /*
  * Size of malloc() pool
