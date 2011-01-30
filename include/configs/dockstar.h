@@ -141,10 +141,10 @@
   "fast_boot=run $ubi_args fast_rd ubi_fallback\0" \
   \
   "usb_boot=run usb_args ext2_kern ext2_boot; run ext2_rd ubi_fallback; run fat_kern fat_boot; run fat_rd ubi_fallback\0" \
-  "usb_args=setenv boot_dev usb 0:1; setenv dev_args root=/dev/sda3 rootdelay=10 rootfstype=ext3; run set_bootargs\0" \
+  "usb_args=setenv boot_dev usb 0:1; setenv dev_args root=/dev/sda1 rootdelay=10 rootfstype=ext3; run set_bootargs\0" \
   \
   "hd_boot=ide reset; run hd_args ext2_kern ext2_boot; run ext2_rd ubi_fallback\0" \
-  "hd_args=setenv boot_dev ide 0:1; setenv dev_args root=/dev/sda3 rootfstype=ext3; run set_bootargs\0" \
+  "hd_args=setenv boot_dev ide 0:1; setenv dev_args root=/dev/sda1 rootfstype=ext3; run set_bootargs\0" \
   \
   "ubi_boot=run $ubi_args ubi_rd ubi_fallback\0" \
   "ubi_args=ubi_args_default\0" \
