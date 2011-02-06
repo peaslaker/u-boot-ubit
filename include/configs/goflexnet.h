@@ -137,7 +137,6 @@
 #include <ubit_env.h>
 
 #define CONFIG_BOOTCOMMAND "run fast_boot; run usb_boot; run hd_boot; run ubi_boot"
-#define CONFIG_PREBOOT "setenv preboot 'ubi part root; usb start; run silent_boot; run nc_test nc_start'; saveenv; ubi part root; usb start; run silent_boot; run nc_test nc_start"
 
 /*
  * Size of malloc() pool

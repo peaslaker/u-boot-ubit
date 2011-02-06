@@ -1,4 +1,9 @@
+#define CONFIG_PREBOOT "setenv preboot 'run ubi_start silent_boot; run nc_test nc_start; run usb_start'; saveenv; run ubi_start silent_boot; run nc_test nc_start; run usb_start"
+
 #define CONFIG_EXTRA_ENV_SETTINGS \
+  "ubi_start=ubi part root\0" \
+  "usb_start=usb start\0" \
+  \
   "nc_test=ping $ncip\0" \
   "nc_start=setenv stdin nc; setenv stdout nc; setenv stderr nc; version\0" \
   \
