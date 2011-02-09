@@ -135,7 +135,7 @@
 
 #include <ubit_env.h>
 
-#define CONFIG_BOOTCOMMAND "run fast_boot; run usb_boot; run hd_boot; run ubi_boot; run chain"
+#define CONFIG_BOOTCOMMAND "run fast_boot; run usb_boot; run hd_boot; run preboot_boot; run ubi_boot; run chain"
 
 /*
  * Size of malloc() pool
