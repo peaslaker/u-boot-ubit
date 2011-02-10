@@ -26,11 +26,6 @@
 #define _CONFIG_PINKPOGO_H
 
 /*
- * Version number information
- */
-#define CONFIG_IDENT_STRING	"\nUBIT v0.5 for Pogoplug Pink v2 by Peter Carmichael"
-
-/*
  * High Level Configuration Options (easy to change)
  */
 #define CONFIG_MARVELL		1

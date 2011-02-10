@@ -26,11 +26,6 @@
 #define _CONFIG_DOCKSTAR_H
 
 /*
- * Version number information
- */
-#define CONFIG_IDENT_STRING	"\nUBIT v0.5 for Seagate Dockstar by Peter Carmichael"
-
-/*
  * High Level Configuration Options (easy to change)
  */
 #define CONFIG_MARVELL		1

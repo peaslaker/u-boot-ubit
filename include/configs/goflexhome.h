@@ -26,11 +26,6 @@
 #define _CONFIG_GOFLEXHOME_H
 
 /*
- * Version number information
- */
-#define CONFIG_IDENT_STRING	"\nUBIT v0.6 for Seagate GoFlex Home by Peter Carmichael"
-
-/*
  * High Level Configuration Options (easy to change)
  */
 #define CONFIG_MARVELL		1

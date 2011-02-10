@@ -1,3 +1,8 @@
+/*
+ * Version number information
+ */
+#define CONFIG_IDENT_STRING	"\nUBIT v0.6 by Jeff Doozan and Peter Carmichael"
+
 #define CONFIG_PREBOOT "setenv preboot 'run ubi_start silent_boot; run nc_test nc_start; run usb_start'; saveenv; run ubi_start silent_boot; run nc_test nc_start; run usb_start"
 
 #define CONFIG_EXTRA_ENV_SETTINGS \
