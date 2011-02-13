@@ -3,6 +3,12 @@
  */
 #define CONFIG_IDENT_STRING	"\nUBIT v0.6 by Jeff Doozan and Peter Carmichael"
 
+/*
+ * Include misc function for setting arcNumber
+ */
+
+#define CONFIG_MISC_INIT_R
+
 #define CONFIG_PREBOOT "setenv preboot 'run ubi_start silent_boot; run nc_test nc_start; run usb_start'; saveenv; run ubi_start silent_boot; run nc_test nc_start; run usb_start"
 
 #define CONFIG_EXTRA_ENV_SETTINGS \
@@ -15,13 +21,13 @@
   "silent_boot=run silent_rd ubi_args ubi_fallback\0" \
   "fast_boot=run fast_rd ubi_args ubi_fallback\0" \
   \
-  "usb_boot=for scan in 0 1 2 3; do run usb_args_$scan ext2_kern ext2_boot; run ext2_rd ubi_fallback; run fat_kern fat_boot; run fat_rd ubi_fallback;done\0" \ 
+  "usb_boot=for scan in 0 1 2 3; do run usb_args_$scan ext2_kern ext2_boot; run ext2_rd ubi_fallback; run fat_kern fat_boot; run fat_rd ubi_fallback;done\0" \
   "usb_args_0=boot_dev='usb 0:1'; dev_args='root=/dev/sda1 rootdelay=10'\0" \
   "usb_args_1=boot_dev='usb 1:1'; dev_args='root=/dev/sdb1 rootdelay=10'\0" \
   "usb_args_2=boot_dev='usb 2:1'; dev_args='root=/dev/sdc1 rootdelay=10'\0" \
   "usb_args_3=boot_dev='usb 3:1'; dev_args='root=/dev/sdd1 rootdelay=10'\0" \
   \
-  "hd_boot=ide reset; for scan in 0 1; do run hd_args_$scan ext2_kern ext2_boot; run ext2_rd ubi_fallback; run fat_kern fat_boot; run fat_rd ubi_fallback; done\0" \ 
+  "hd_boot=ide reset; for scan in 0 1; do run hd_args_$scan ext2_kern ext2_boot; run ext2_rd ubi_fallback; run fat_kern fat_boot; run fat_rd ubi_fallback; done\0" \
   "hd_args_0=boot_dev='ide 0:1'; dev_args='root=/dev/sda1'\0" \
   "hd_args_1=boot_dev='ide 1:1'; dev_args='root=/dev/sdb1'\0" \
   \

@@ -110,6 +110,19 @@ int board_init(void)
 return 0;
 }
 
+int misc_init_r()
+{
+        int __machine_arch_type;
+        char *str_arc_number = getenv("arcNumber");
+        
+        if (str_arc_number) {
+                __machine_arch_type = simple_strtoul(str_arc_number, NULL, 10);
+                if (__machine_arch_type)
+                        gd->bd->bi_arch_number = __machine_arch_type;
+        }
+        return 0;
+}
+            
 int dram_init(void)
 {
 	int i;
