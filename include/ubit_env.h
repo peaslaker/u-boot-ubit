@@ -34,7 +34,7 @@
   "ubi_boot=run ubi_rd ubi_args ubi_fallback\0" \
   "ubi_args=dev_args='ubi.mtd=root'\0" \
   \
-  "preboot_boot=run preboot_rd preboot_args ubi_fallback\0" \
+  "maintain=run preboot_args; run silent_hd ubi_fallback; run fast_rd ubi_fallback; run ubi_rd ubi_fallback\0" \
   "preboot_args=dev_args='ubi.mtd=root rootfstype=preboot'\0" \
   \
   "chain=nand read.e 0x800000 0x480000 0x80000; go 0x800200\0" \
@@ -61,7 +61,6 @@
   \
   "silent_rd=ubifsmount silent; ubifsload $addr_rd /uInitrd\0" \
   "fast_rd=ubifsmount fast; ubifsload $addr_rd /uInitrd\0" \
-  "preboot_rd=ubifsmount preboot; ubifsload $addr_rd /uInitrd\0" \
   \
   "boot_kern=run set_bootargs; bootm $addr_kern\0" \
   "boot_rd=run set_bootargs; bootm $addr_kern $addr_rd\0" \
