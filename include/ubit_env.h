@@ -15,17 +15,21 @@
   "silent_boot=run silent_rd ubi_args ubi_fallback\0" \
   "fast_boot=run fast_rd ubi_args ubi_fallback\0" \
   \
-  "usb_boot=run usb_args ext2_kern ext2_boot; run ext2_rd ubi_fallback; run fat_kern fat_boot; run fat_rd ubi_fallback\0" \
-  "usb_args=setenv boot_dev usb 0:1; setenv dev_args root=/dev/sda1 rootdelay=10; run set_bootargs\0" \
+  "usb_boot=for scan in 0 1 2 3; do run usb_args_$scan ext2_kern ext2_boot; run ext2_rd ubi_fallback; run fat_kern fat_boot; run fat_rd ubi_fallback;done\0" \ 
+  "usb_args_0=boot_dev='usb 0:1'; dev_args='root=/dev/sda1 rootdelay=10'\0" \
+  "usb_args_1=boot_dev='usb 1:1'; dev_args='root=/dev/sdb1 rootdelay=10'\0" \
+  "usb_args_2=boot_dev='usb 2:1'; dev_args='root=/dev/sdc1 rootdelay=10'\0" \
+  "usb_args_3=boot_dev='usb 3:1'; dev_args='root=/dev/sdd1 rootdelay=10'\0" \
   \
-  "hd_boot=ide reset; run hd_args ext2_kern ext2_boot; run ext2_rd ubi_fallback\0" \
-  "hd_args=setenv boot_dev ide 0:1; setenv dev_args root=/dev/sda1; run set_bootargs\0" \
+  "hd_boot=ide reset; for scan in 0 1; do run hd_args_$scan ext2_kern ext2_boot; run ext2_rd ubi_fallback; run fat_kern fat_boot; run fat_rd ubi_fallback; done\0" \ 
+  "hd_args_0=boot_dev='ide 0:1'; dev_args='root=/dev/sda1'\0" \
+  "hd_args_1=boot_dev='ide 1:1'; dev_args='root=/dev/sdb1'\0" \
   \
   "ubi_boot=run ubi_rd ubi_args ubi_fallback\0" \
-  "ubi_args=setenv dev_args ubi.mtd=root; run set_bootargs\0" \
+  "ubi_args=dev_args='ubi.mtd=root'\0" \
   \
   "preboot_boot=run preboot_rd preboot_args ubi_fallback\0" \
-  "preboot_args=setenv dev_args ubi.mtd=root rootfstype=preboot; run set_bootargs\0" \
+  "preboot_args=dev_args='ubi.mtd=root rootfstype=preboot'\0" \
   \
   "chain=nand read.e 0x800000 0x480000 0x80000; go 0x800200\0" \
   \
@@ -53,8 +57,8 @@
   "fast_rd=ubifsmount fast; ubifsload $addr_rd /uInitrd\0" \
   "preboot_rd=ubifsmount preboot; ubifsload $addr_rd /uInitrd\0" \
   \
-  "boot_kern=bootm $addr_kern\0" \
-  "boot_rd=bootm $addr_kern $addr_rd\0" \
+  "boot_kern=run set_bootargs; bootm $addr_kern\0" \
+  "boot_rd=run set_bootargs; bootm $addr_kern $addr_rd\0" \
   \
   "addr_kern=0x680000\0" \
   "addr_rd=0x1100000\0" \
