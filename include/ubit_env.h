@@ -34,8 +34,7 @@
   "ubi_boot=run ubi_rd ubi_args ubi_fallback\0" \
   "ubi_args=dev_args='ubi.mtd=root'\0" \
   \
-  "maintain=run preboot_args; run silent_hd ubi_fallback; run fast_rd ubi_fallback; run ubi_rd ubi_fallback\0" \
-  "preboot_args=dev_args='ubi.mtd=root rootfstype=preboot'\0" \
+  "rescue=dev_args='ubi.mtd=root rootfstype=preboot';run silent_hd ubi_fallback; run fast_rd ubi_fallback; run ubi_rd ubi_fallback\0" \
   \
   "chain=nand read.e 0x800000 0x480000 0x80000; go 0x800200\0" \
   \
